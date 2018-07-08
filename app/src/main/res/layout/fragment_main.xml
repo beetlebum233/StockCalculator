@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="calculator"
+            type="cn.mister.stockcalculator.viewmodel.CalculatorViewModel" />
+    </data>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.1"
+            android:orientation="vertical"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.9"
+            android:orientation="vertical"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.05"
+            android:orientation="vertical"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_percent="0.95"
+            android:orientation="vertical"/>
+
+        <View
+            android:id="@+id/background"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:background="#00AE67"
+            android:paddingBottom="200dp"/>
+
+        <SearchView
+            android:id="@+id/search_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_1"
+            app:layout_constraintRight_toRightOf="@id/guideline_2"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#BBBBBB"
+            android:inputType="text"
+            android:imeOptions="actionDone"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/stock_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/search_view"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_1">
+            <TextView
+                android:id="@+id/stock_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{calculator.stock.name}"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+            <TextView
+                android:id="@+id/stock_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{calculator.stock.code}"
+                android:textColor="#DDDDDD"
+                android:layout_marginLeft="5dp"
+                app:layout_constraintLeft_toRightOf="@id/stock_name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="40sp"
+                app:layout_constraintTop_toBottomOf="@id/stock_name"
+                android:text="@{calculator.stock.current}"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"/>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/stock_form"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_3"
+            app:layout_constraintRight_toRightOf="@id/guideline_4"
+            app:layout_constraintTop_toBottomOf="@id/stock_info"
+            android:paddingTop="20dp"
+            android:background="#FFFFFF">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.4"
+                android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/buy_in_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_label"
+                android:text="@string/buy_in_price"
+                android:gravity="end"
+                android:layout_marginRight="30dp"/>
+
+            <EditText
+                android:id="@+id/buy_in_et"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/guideline_label"
+                app:layout_constraintTop_toTopOf="@id/buy_in_tv"
+                app:layout_constraintBottom_toBottomOf="@id/buy_in_tv"
+                android:text="@={calculator.stockForm.buyIn}"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:id="@+id/sell_out_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_label"
+                app:layout_constraintTop_toBottomOf="@id/buy_in_tv"
+                android:layout_marginTop="20dp"
+                android:text="@string/sell_out_price"
+                android:gravity="end"
+                android:layout_marginRight="30dp"/>
+
+            <EditText
+                android:id="@+id/sell_out_et"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/guideline_label"
+                app:layout_constraintTop_toTopOf="@id/sell_out_tv"
+                app:layout_constraintBottom_toBottomOf="@id/sell_out_tv"
+                android:text="@={calculator.stockForm.sellOut}"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:id="@+id/commission_ratio_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_label"
+                app:layout_constraintTop_toBottomOf="@id/sell_out_tv"
+                android:layout_marginTop="20dp"
+                android:text="@string/commission_ratio"
+                android:gravity="end"
+                android:layout_marginRight="30dp"/>
+
+            <EditText
+                android:id="@+id/commission_ratio_et"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/guideline_label"
+                app:layout_constraintTop_toTopOf="@id/commission_ratio_tv"
+                app:layout_constraintBottom_toBottomOf="@id/commission_ratio_tv"
+                android:text="@={calculator.stockForm.commissionRatio}"
+                android:inputType="numberDecimal"/>
+
+            <TextView
+                android:id="@+id/transactions_number_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_label"
+                app:layout_constraintTop_toBottomOf="@id/commission_ratio_tv"
+                android:layout_marginTop="20dp"
+                android:text="@string/transactions_number"
+                android:gravity="end"
+                android:layout_marginRight="30dp"/>
+
+            <EditText
+                android:id="@+id/transactions_number_et"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="@id/guideline_label"
+                app:layout_constraintTop_toTopOf="@id/transactions_number_tv"
+                app:layout_constraintBottom_toBottomOf="@id/transactions_number_tv"
+                android:text="@={calculator.stockForm.transactionsNumber}"
+                android:inputType="numberDecimal"/>
+
+            <Button
+                android:id="@+id/search_btn"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                app:layout_constraintTop_toBottomOf="@id/transactions_number_tv"
+                android:layout_marginTop="30dp"
+                android:text="@string/search_trading_list"
+                android:textColor="#FFFFFF"
+                android:background="#00AE67"
+                android:onClick="@{() -> calculator.calculate() }"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/trading_list_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:text="@string/trading_list"
+            android:textStyle="bold"
+            android:background="#FFFFFF"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_3"
+            app:layout_constraintRight_toRightOf="@id/guideline_4"
+            app:layout_constraintTop_toBottomOf="@id/stock_form"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_3"
+            app:layout_constraintRight_toRightOf="@id/guideline_4"
+            app:layout_constraintTop_toBottomOf="@id/trading_list_tv"
+            android:layout_marginTop="2dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="#FFFFFF">
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_trading_list_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.40"
+                android:orientation="vertical"/>
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_costs_label_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.1"
+                android:orientation="vertical"/>
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline_costs_label_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.6"
+                android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/buy_handling_fee_title"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_trading_list_label"
+                android:text="@string/buy_handling_fee"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:id="@+id/buy_handling_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="20dp"
+                android:gravity="end"
+                android:text="@{calculator.tradingList.buyHandlingFee}"/>
+
+            <TextView
+                android:id="@+id/sell_handling_fee_title"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_trading_list_label"
+                app:layout_constraintTop_toBottomOf="@id/buy_handling_fee_title"
+                android:text="@string/sell_handling_fee"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:id="@+id/sell_handling_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/sell_handling_fee_title"
+                android:layout_marginRight="20dp"
+                android:gravity="end"
+                android:text="@{calculator.tradingList.sellHandlingFee}"/>
+
+            <TextView
+                android:id="@+id/stamp_duty_title"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_trading_list_label"
+                app:layout_constraintTop_toBottomOf="@id/sell_handling_fee_title"
+                android:text="@string/stamp_duty"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:id="@+id/stamp_duty"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/stamp_duty_title"
+                android:layout_marginRight="20dp"
+                android:gravity="end"
+                android:text="@{calculator.tradingList.stampDuty}"/>
+
+            <TextView
+                android:id="@+id/transfer_fee_title"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="@id/guideline_trading_list_label"
+                app:layout_constraintTop_toBottomOf="@id/stamp_duty_title"
+                android:text="@string/transfer_fee"
+                android:layout_marginRight="30dp"/>
+
+            <TextView
+                android:id="@+id/transfer_fee"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/transfer_fee_title"
+                android:layout_marginRight="20dp"
+                android:gravity="end"
+                android:text="@{calculator.tradingList.transferFee}"/>
+
+            <View
+                android:id="@+id/green_point"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/green_circle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transfer_fee_title"/>
+
+            <TextView
+                android:id="@+id/transaction_costs_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_costs"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/green_point"
+                app:layout_constraintRight_toRightOf="@id/guideline_costs_label_end"
+                app:layout_constraintTop_toTopOf="@id/green_point" />
+
+            <TextView
+                android:id="@+id/transaction_costs"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/green_point"
+                app:layout_constraintLeft_toLeftOf="@id/guideline_costs_label_end"
+                app:layout_constraintLeft_toRightOf="@id/transaction_costs_title"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="20dp"
+                android:text="@{calculator.tradingList.costs}"
+                android:gravity="end"
+                android:textColor="#48D1CC"/>
+
+            <View
+                android:id="@+id/blue_point"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/blue_circle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/green_point"/>
+
+            <TextView
+                android:id="@+id/profit_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/blue_point"
+                app:layout_constraintLeft_toRightOf="@id/blue_point"
+                app:layout_constraintRight_toRightOf="@id/guideline_costs_label_end"
+                android:text="@string/profit"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/profit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/blue_point"
+                app:layout_constraintLeft_toRightOf="@id/profit_title"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/guideline_costs_label_end"
+                android:layout_marginRight="20dp"
+                android:text="@{calculator.tradingList.profit}"
+                android:gravity="end"
+                android:textColor="#48D1CC"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

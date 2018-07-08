@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">StockCalculator</string>
+    <string name="app_name">股票计算器</string>
+    <string name="search_hint">请输入股票名称</string>
+    <string name="buy_in_price">买入价位</string>
+    <string name="sell_out_price">卖出价位</string>
+    <string name="commission_ratio">券商佣金</string>
+    <string name="transactions_number">成交数量</string>
+    <string name="search_trading_list">查看交易清单</string>
+    <string name="trading_list">交易清单</string>
+    <string name="buy_handling_fee">买入手续费</string>
+    <string name="sell_handling_fee">卖出手续费</string>
+    <string name="stamp_duty">印花税</string>
+    <string name="transfer_fee">过户费</string>
+    <string name="transaction_costs">交易产生费用：</string>
+    <string name="profit">净利润：</string>
+
 </resources>

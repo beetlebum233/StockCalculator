@@ -14,4 +14,17 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+    @Test
+    fun testHttp(){
+        val response = ScrapingUtil.getResponse("SZ000019")
+        ScrapingUtil.getQuote("SZ000019", { stock ->
+            print(stock)
+        })
+    }
+
+    @Test
+    fun testHeader(){
+        ScrapingUtil.getCookie()
+    }
 }

@@ -1,5 +1,6 @@
 package cn.mister.stockcalculator
 
+import android.animation.ObjectAnimator
 import android.app.Fragment
 import android.app.SearchManager
 import android.content.Context
@@ -14,19 +15,28 @@ import android.database.MatrixCursor
 import android.databinding.ObservableField
 import android.provider.BaseColumns
 import android.graphics.Color
+import android.view.MotionEvent
 import android.widget.*
 import cn.mister.stockcalculator.event.SuggestionChangeEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import android.widget.TextView
+import cn.mister.stockcalculator.calculator.CalculatorNavigator
 import cn.mister.stockcalculator.viewmodel.CalculatorViewModel
 import cn.mister.stockcalculator.entity.StockForm
 import cn.mister.stockcalculator.entity.StockQuote
 import cn.mister.stockcalculator.entity.TradingList
+import java.lang.ref.WeakReference
+import android.animation.AnimatorSet
+import android.content.Intent
+import android.graphics.Rect
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), CalculatorNavigator {
+
+
+    var translationY = 0
 
     private var calculator: CalculatorViewModel? = null
 
@@ -37,7 +47,7 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding: FragmentMainBinding = DataBindingUtil.inflate(inflater!!, R.layout.fragment_main, container, false)
-        calculator = CalculatorViewModel()
+        calculator = CalculatorViewModel(WeakReference(this))
         binding.calculator = calculator
 
         return binding.root
@@ -64,9 +74,10 @@ class MainFragment : Fragment() {
 
             override fun onSuggestionClick(position: Int): Boolean {
                 search_view.setQuery(suggestions[position].name, false)
-                search_view.clearFocus()
+//                search_view.clearFocus()
 //                doSearch(suggestions.get(position))
                 calculator!!.search(suggestions[position].code!!)
+                showTradingList(true)
                 return true
             }
         })
@@ -92,6 +103,38 @@ class MainFragment : Fragment() {
         val textView = search_view.findViewById(id) as TextView
         textView.setTextColor(Color.WHITE)
 
+        buy_in_et.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                try{
+                    val value = buy_in_et.text.toString().toDouble()
+                    buy_in_et.setText(String.format("%.2f", value))
+                }catch (e: Exception){
+
+                }
+
+            }
+        }
+        sell_out_et.setOnFocusChangeListener { v, hasFocus ->
+            if(!hasFocus){
+                try{
+                    val value = sell_out_et.text.toString().toDouble()
+                    sell_out_et.setText(String.format("%.2f", value))
+                }catch (e: Exception){
+
+                }
+            }
+        }
+        commission_ratio_et.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                try {
+                    val value = commission_ratio_et.text.toString().toDouble()
+                    commission_ratio_et.setText(String.format("%.1f", value))
+                } catch (e: Exception) {
+
+                }
+            }
+
+        }
     }
 
     override fun onStart() {
@@ -120,6 +163,30 @@ class MainFragment : Fragment() {
             cursor.addRow(tmp)
         }
         suggestionAdapter?.swapCursor(cursor)
+    }
+
+    override fun showTradingList(isShown: Boolean) {
+
+        var y = 0
+        if(isShown){
+            y = translationY
+        }else{
+            translationY = trading_list_tv.top - stock_form.top - stock_form.height - 20
+            y = -translationY
+        }
+
+        val animation1 = ObjectAnimator.ofFloat(trading_list, "translationY", y.toFloat())
+        val animation2 = ObjectAnimator.ofFloat(trading_list_tv, "translationY", y.toFloat())
+        val animatorSet = AnimatorSet()
+        animation1.duration = 500
+        animation2.duration = 500
+        animatorSet.playTogether(animation1, animation2)
+        animatorSet.start()
+    }
+
+    override fun showExplain() {
+        val intent = Intent(activity, ExplainActivity::class.java)
+        startActivity(intent)
     }
 
 }

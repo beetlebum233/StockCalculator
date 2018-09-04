@@ -13,5 +13,6 @@
     <string name="transfer_fee">过户费</string>
     <string name="transaction_costs">交易产生费用：</string>
     <string name="profit">净利润：</string>
-
+    <string name="yuan">元</string>
+    <string name="shares">股</string>
 </resources>
